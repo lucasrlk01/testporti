@@ -15,16 +15,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: checkout do repositorio
+      - name: Checkout do repositório
         uses: actions/checkout@v4
 
-      - name: Configurar Github pages
+      - name: Configurar GitHub Pages
         uses: actions/configure-pages@v5
 
       - name: Criar artefato para deploy
-        uses: actions/upload-pages-artifact@v2 # pode tentar também o @v2 se funcionar
+        uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: ./ # Certifique-se de que este é o caminho correto do seu site
 
-      - name:  Publicar no GitHub pages
+      - name: Publicar no GitHub Pages
         uses: actions/deploy-pages@v4
