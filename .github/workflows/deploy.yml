@@ -1,8 +1,9 @@
-name: Deploy to GitHub Pages
+name: Deploy para GitHub Pages
 
 on:
   push:
-    branches: ["main"]
+    branches:
+      - main # executa quando há mudanças na branch principal
 
 permissions:
   contents: write
@@ -10,21 +11,20 @@ permissions:
   id-token: write
 
 jobs:
-  build-deploy:
+  deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      
-      - uses: actions/configure-pages@v5
-      
-      # Seus passos de build aqui
-      - run: echo "Build commands here..."
-      
-      # Use UPLOAD-PAGES-ARTIFACT (não upload-artifact)
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v2  # Ou @v3 se disponível
+      - name: checkout do repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Github pages
+        uses: actions/configure-pages@v5
+
+      - name: Criar artefato para deploy
+        uses: actions/upload-pages-artifact@v2 # pode tentar também o @v2 se funcionar
         with:
-          path: ./dist  # Ajuste para o diretório de saída do seu build
-      
-      - name: Deploy
-        uses: actions/deploy-pages@v3
+          path: .
+
+      - name:  Publicar no GitHub pages
+        uses: actions/deploy-pages@v4
