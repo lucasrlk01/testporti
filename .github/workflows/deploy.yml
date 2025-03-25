@@ -1,9 +1,8 @@
-name: Deploy para GitHub Pages
+name: Deploy to GitHub Pages
 
 on:
   push:
-    branches:
-      - main # executa quando há mudanças na branch principal
+    branches: ["main"]  # Altere se sua branch for diferente
 
 permissions:
   contents: write
@@ -11,20 +10,19 @@ permissions:
   id-token: write
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
-
     steps:
-      - name: checkout do repositorio
-        uses: actions/checkout@v4
-
-      - name: Configurar Github pages
-        uses: actions/configure-pages@v5
-
-      - name: Criar artefato para deploy
-        uses: actions/upload-pages-artifact@v3 # pode tentar também o @v2 se funcionar
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      # Adicione passos de build (ex: npm install, npm run build)
+      - run: echo "Comandos de build aqui..."
+      
+      # Se usar um framework (ex: Jekyll, React, Vue)
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v2
         with:
-          path: .
+          path: ./dist  # Pasta de saída do build
 
-      - name:  Publicar no GitHub pages
-        uses: actions/deploy-pages@v4
+      - name: Deploy
+        uses: actions/deploy-pages@v3
